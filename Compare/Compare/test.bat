@@ -26,6 +26,10 @@ rem сравнение не пустого файла с самим собой
 %PROGRAM% not_empty.txt not_empty.txt
 if ERRORLEVEL 1 goto err
 
+rem сравнение пустого файла с не пустым
+%PROGRAM% empty.txt not_empty.txt
+if NOT ERRORLEVEL 1 goto err
+
 echo Program testing succeeded
 exit 0
 
