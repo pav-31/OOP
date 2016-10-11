@@ -17,6 +17,28 @@ bool CheckFileOpening(ifstream & file)
 	}
 }
 
+bool FileComparison(ifstream & file1, ifstream & file2, int & lineNumber)
+{
+	string stringFromFile1;
+	string stringFromFile2;
+
+	while ((!file1.eof()) || (!file2.eof()))
+	{
+		getline(file1, stringFromFile1);
+		getline(file2, stringFromFile2);
+
+		if (stringFromFile1 == stringFromFile2)
+		{
+			++lineNumber;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 int main(int argc, char *argv[])
 {
 	if (argc != 3)
@@ -42,27 +64,17 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	string stringFromFile1;
-	string stringFromFile2;
-
 	int lineNumber = 1;
 
-	while ((!file1.eof()) || (!file2.eof()))
+	if (!FileComparison(file1, file2, lineNumber))
 	{
-		getline(file1, stringFromFile1);
-		getline(file2, stringFromFile2);
-
-		if (stringFromFile1 == stringFromFile2)
-		{
-			++lineNumber;
-		}
-		else
-		{
-			cout << "Files are different. Line number is " << lineNumber << endl;
-			return 1;
-		}
-
+		cout << "Files are different. Line number is " << lineNumber << endl;
+		return 1;
 	}
-	cout << "Files are equal" << endl;
+	else
+	{
+		cout << "Files are equal" << endl;
+	}
+
 	return 0;
 }
