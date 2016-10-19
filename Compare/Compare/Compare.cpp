@@ -17,26 +17,28 @@ bool CheckFileOpening(ifstream & file)
 	}
 }
 
-bool FileComparison(ifstream & file1, ifstream & file2, int & lineNumber)
+int FileComparison(istream & file1, istream & file2)
 {
 	string stringFromFile1;
 	string stringFromFile2;
 
+	int lineNumber = 1;
+	
 	while ((!file1.eof()) || (!file2.eof()))
 	{
 		getline(file1, stringFromFile1);
 		getline(file2, stringFromFile2);
 
-		if (stringFromFile1 == stringFromFile2)
+		if (stringFromFile1 != stringFromFile2)
 		{
-			++lineNumber;
+			return lineNumber;
 		}
 		else
 		{
-			return false;
+			++lineNumber;
 		}
 	}
-	return true;
+	return 0;
 }
 
 int main(int argc, char *argv[])
@@ -44,7 +46,7 @@ int main(int argc, char *argv[])
 	if (argc != 3)
 	{
 		cout << "Invalid arguments count" << endl
-			<< "Usage: copyfile.exe <input file1> <input file2>" << endl;
+			<< "Usage: compare.exe <input file1> <input file2>" << endl;
 		return 1;
 	}
 
@@ -64,17 +66,14 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	int lineNumber = 1;
-
-	if (!FileComparison(file1, file2, lineNumber))
+	int resultOfCompare = FileComparison(file1, file2);
+	if (resultOfCompare != 0)
 	{
-		cout << "Files are different. Line number is " << lineNumber << endl;
+		cout << "Files are different. Line number is " << resultOfCompare << endl;
 		return 1;
 	}
-	else
-	{
-		cout << "Files are equal" << endl;
-	}
+
+	cout << "Files are equal" << endl;
 
 	return 0;
 }
