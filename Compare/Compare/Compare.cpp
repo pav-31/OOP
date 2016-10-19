@@ -66,10 +66,11 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	int resultOfCompare = FileComparison(file1, file2);
-	if (resultOfCompare != 0)
+	int resultOfComparsion = FileComparison(file1, file2);
+	
+	if (resultOfComparsion != 0)
 	{
-		cout << "Files are different. Line number is " << resultOfCompare << endl;
+		cout << "Files are different. Line number is " << resultOfComparsion << endl;
 		return 1;
 	}
 
